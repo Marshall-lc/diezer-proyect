@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FERRETERÍA 💪 - Venta de Productos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Oswald:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo-container">
+                <img src="images/logo_deizer.jpg" alt="Logo Ferretería Duro" class="header-logo">
+                <h1 class="logo">DISTRIBUIDORA DEIZER</h1>
+            </div>
+            <nav class="nav">
+                <a href="#productos">Productos</a>
+                <a href="#ofertas">Ofertas</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <aside class="sidebar" id="sidebar">
+            <h2 class="sidebar-title">🛠️ Categorías</h2>
+            <div id="category-filters" class="filter-group">
+                </div>
+
+            <h2 class="sidebar-title">🔍 Búsqueda</h2>
+            <input type="text" id="search-input" placeholder="Buscar por nombre o marca...">
+        </aside>
+
+        <section class="products-section">
+            <h2 id="productos" class="section-title">Nuestros Productos en Stock</h2>
+            <div id="product-list" class="product-grid">
+                </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 DISTRIBUIDORA DEIZER. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <button id="search-toggle" class="search-toggle-btn">
+        BUSCADOR 🔍
+    </button>
+    
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+/* Paleta de Colores de Ferretería:
+   - Naranja/Amarillo (Alertas/Ofertas): #FF8C00
+   - Gris Oscuro/Metálico (Fondo/Detalles): #333333
+   - Rojo (Acción/Peligro): #CC0000
+   - Negro (Texto/Base): #1A1A1A
+*/
+
+:root {
+    --primary-color: #31403E;
+    --secondary-color: #9BB9BF;
+    --bg-color: #f4f4f4;
+    --card-bg-color: #ffffff;
+    --dark-color: #1A1A1A;
+    --metal-color: #333333;
+    --font-family: 'Roboto Mono', monospace;
+    --heading-font: 'Oswald', sans-serif;
+}
+
+/* Base y Tipografía */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilo del Header */
+.header {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 1rem 0;
+    border-bottom: 5px solid var(--primary-color);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo-container {
+    display: flex; /* Para alinear el logo y el texto horizontalmente */
+    align-items: center; /* Centrado vertical */
+}
+
+.header-logo {
+    height: 50px; /* Tamaño del logo en desktop */
+    width: auto;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+    border: 2px solid var(--card-bg-color); /* Borde de 2px sólido naranja */
+    border-radius: 8px; /* Redondea las esquinas */
+    padding: 3px;
+    background-color: white;
+}
+
+.logo {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    color: var(--secondary-color);
+    letter-spacing: 2px;
+}
+
+/* --- REGLAS PARA EL BOTÓN "BUSCADOR" FIJO EN MÓVIL (IZQUIERDA) --- */
+.search-toggle-btn {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    top: 30%; /* Ligeramente más arriba del medio (50%) */
+    left: 0; /* Pegado al límite izquierdo */
+    
+    /* Dimensiones solicitadas */
+    width: 32px;
+    height: 146px; 
+    
+    /* Estilos */
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+    border: 1px solid var(--primary-color);
+    padding: 5px;
+    font-size: 0.9rem;
+    font-family: var(--heading-font);
+    cursor: pointer;
+    z-index: 950;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    
+    /* Rotación para texto vertical */
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.search-toggle-btn:hover {
+    background-color: #e67e22; /* Tono más oscuro de naranja */
+}
+
+
+.sidebar-overlay {
+    /* Oculto por defecto */
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 900;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.sidebar-open .sidebar-overlay {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Layout principal */
+.main-content {
+    display: grid;
+    grid-template-columns: 1fr; /* Una sola columna por defecto (móvil) */
+    gap: 30px;
+    padding: 30px 0;
+}
+
+/* Sidebar y Filtros (Off-Canvas desde la IZQUIERDA en móvil) */
+.sidebar {
+    background-color: var(--metal-color);
+    color: white;
+    padding: 20px;
+    height: fit-content;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    /* Reglas Off-Canvas para móvil */
+    position: fixed;
+    top: 0;
+    left: 0; /* Desliza desde la izquierda */
+    width: 280px;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(-100%); /* Oculto fuera de pantalla (movido a la izquierda) */
+    transition: transform 0.3s ease-out;
+    border-radius: 0;
+    overflow-y: auto;
+}
+
+.sidebar-open .sidebar {
+    transform: translateX(0); /* Muestra el sidebar desde la izquierda */
+}
+
+/* Sección de Productos */
+.product-grid {
+    /* MÓVIL: Dos productos por fila */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
+    gap: 15px;
+}
+
+/* ------------------------------------- */
+/* --- Media Queries (Desktop) ---       */
+/* ------------------------------------- */
+@media (min-width: 768px) {
+    /* Esconder el botón de menú en desktop */
+    .search-toggle-btn {
+        display: none;
+    }
+    
+    /* Estructura de dos columnas en desktop (Sidebar a la izquierda - Revertido) */
+    .main-content {
+        grid-template-columns: 250px 1fr; 
+    }
+    
+    /* El sidebar vuelve a ser estático a la izquierda en desktop */
+    .sidebar {
+        position: static;
+        transform: translateX(0);
+        width: auto;
+        height: fit-content;
+        border-radius: 8px;
+        /* Quitamos el borde redondo de la derecha en desktop */
+    }
+    .sidebar-overlay {
+        display: none;
+    }
+    
+    /* DESKTOP: Mínimo 3 productos por fila */
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+        gap: 20px;
+    }
+}
+
+/* ------------------------------------- */
+/* --- Media Queries (Mobile) ---        */
+/* ------------------------------------- */
+@media (max-width: 767px) {
+    .header .container {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .logo-container {
+        justify-content: center; /* Centrar el logo y texto si hay espacio limitado */
+    }
+    .header-logo {
+        height: 43px; /* Reducir el tamaño del logo en móvil */
+    }
+    .logo {
+        font-size: 1.5rem; /* Reducir el tamaño del texto del logo en móvil */
+    }
+    .nav {
+        display: none; 
+    }
+    .search-toggle-btn {
+        display: block; /* Mostrar el botón de filtros fijo */
+    }
+    
+    /* Ajustar margen derecho del main-content para que el botón no lo tape si scrollea */
+    .main-content {
+        padding-left: 10px; 
+    }
+}
+
+
+/* Estilos de Tipografía y Componentes (Se mantienen) */
+.sidebar-title {
+    font-family: var(--heading-font);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 5px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-family: var(--font-family);
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.filter-group label:hover {
+    color: var(--secondary-color);
+}
+/* ... (Resto de estilos) ... */
+/* Sección de Productos */
+.section-title {
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    border-left: 5px solid var(--primary-color);
+    padding-left: 10px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Responsive Grid */
+    gap: 20px;
+}
+
+/* Tarjeta de Producto */
+.product-card {
+    background-color: var(--card-bg-color);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    padding-bottom: 15px; /* Espacio para el botón */
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.product-image-placeholder {
+    width: 100%;
+    height: 200px;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #666;
+    border-bottom: 3px solid var(--secondary-color);
+    text-align: center;
+    padding: 10px;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-name {
+    font-family: var(--heading-font);
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+    color: var(--dark-color);
+}
+
+.product-brand {
+    font-size: 0.85rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.price-detail {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--metal-color);
+    margin-bottom: 5px;
+}
+
+.product-description {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 15px;
+    height: 40px; /* Limitar altura para uniformidad */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-offer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--secondary-color);
+    color: var(--dark-color);
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-family: var(--heading-font);
+    z-index: 10;
+}
+
+.add-to-cart-btn {
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--heading-font);
+    font-size: 1.1rem;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #a30000;
+}
+
+/* Estilo del Footer */
+.footer {
+    background-color: var(--metal-color);
+    color: #ccc;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 30px;
+}
+
+/* Responsive para la navegación */
+@media (max-width: 600px) {
+    .header .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .nav {
+        margin-top: 10px;
+    }
+    .nav a {
+        display: block;
+        margin: 5px 0;
+    }
+}
